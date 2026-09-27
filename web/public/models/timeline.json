@@ -1,0 +1,46 @@
+{
+ "fps": 30,
+ "framesPerStep": 72,
+ "steps": 10,
+ "frameEnd": 720,
+ "stepNm": 8,
+ "headStepNm": 16,
+ "phases": [
+  {
+   "from": 0.0,
+   "to": 0.2,
+   "key": "atp_binding"
+  },
+  {
+   "from": 0.2,
+   "to": 0.3,
+   "key": "neck_docking"
+  },
+  {
+   "from": 0.3,
+   "to": 0.62,
+   "key": "swing"
+  },
+  {
+   "from": 0.62,
+   "to": 0.72,
+   "key": "landing_adp_release"
+  },
+  {
+   "from": 0.72,
+   "to": 0.8,
+   "key": "hydrolysis"
+  },
+  {
+   "from": 0.8,
+   "to": 0.86,
+   "key": "pi_release"
+  },
+  {
+   "from": 0.86,
+   "to": 1.0,
+   "key": "rear_detach"
+  }
+ ],
+ "frontHeadEvenSteps": "Head_A"
+}

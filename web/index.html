@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Kinesin läuft · LMG TECH</title>
+  <meta name="description" content="Interaktive 3D-Animation: Kinesin-1 läuft Hand über Hand entlang eines Mikrotubulus." />
+  <link rel="icon" type="image/png" href="/lmg-tech-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="scene" aria-label="3D-Ansicht: Kinesin auf einem Mikrotubulus"></canvas>
+    <div id="dip"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <div id="hotspots" aria-live="off"></div>
+    <div id="hoverTip" role="tooltip"></div>
+
+    <!-- Logo + Titel (Ecke oben links) -->
+    <header class="brand">
+      <a class="logo" href="#" aria-label="LMG TECH"><img src="/lmg-tech-logo.png" alt="LMG TECH Logo" width="72" height="72" /></a>
+      <div class="titles">
+        <div class="eyebrow">Molekulare Motoren · Zellbiologie</div>
+        <h1>Kinesin <em>läuft</em></h1>
+        <p>Hand über Hand entlang eines Mikrotubulus</p>
+      </div>
+    </header>
+
+    <!-- Bauteil-Index -->
+    <nav class="index" id="index" aria-label="Bauteile">
+      <button class="index-toggle" id="indexToggle" aria-expanded="true">
+        <span>Bauteile</span><span class="count" id="partCount"></span><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <ol id="partList"></ol>
+    </nav>
+
+    <!-- Info-Panel -->
+    <aside id="info" class="info" aria-hidden="true">
+      <button class="close" id="infoClose" aria-label="Schließen">×</button>
+      <div class="info-kicker"><span class="swatch" id="infoSwatch"></span><span id="infoKicker"></span></div>
+      <h2 id="infoTitle"></h2>
+      <div class="live" id="infoLive" hidden></div>
+      <p id="infoText"></p>
+      <dl id="infoFacts"></dl>
+      <div class="info-actions">
+        <button class="btn" id="infoFocus">Heranzoomen</button>
+        <button class="btn ghost" id="infoPrev" aria-label="Vorheriges Bauteil">←</button>
+        <button class="btn ghost" id="infoNext" aria-label="Nächstes Bauteil">→</button>
+      </div>
+    </aside>
+
+    <!-- Messwerte -->
+    <div class="readout" aria-label="Messwerte">
+      <div><span class="k">Schritt</span><span class="v" id="rStep">1 / 10</span></div>
+      <div><span class="k">Weg</span><span class="v" id="rDist">0 nm</span></div>
+      <div><span class="k">ATP verbraucht</span><span class="v" id="rAtp">0</span></div>
+      <div><span class="k">Zeitlupe</span><span class="v" id="rSlow">×240</span></div>
+      <div><span class="k">Vergrößerung</span><span class="v" id="rMag">—</span></div>
+    </div>
+
+    <!-- Zoom -->
+    <div class="zoom" aria-label="Zoom">
+      <button id="zoomIn" aria-label="Hineinzoomen">+</button>
+      <input id="zoomSlider" type="range" min="0" max="1000" value="500" orient="vertical" aria-label="Zoomstufe" />
+      <button id="zoomOut" aria-label="Herauszoomen">−</button>
+    </div>
+
+    <!-- Maßstab -->
+    <div class="scalebar" aria-label="Maßstab"><div class="bar" id="scaleBar"></div><span id="scaleLabel">10 nm</span></div>
+
+    <!-- Phase -->
+    <section class="phase" aria-live="polite">
+      <div class="phase-top"><span class="phase-no" id="phaseNo">01</span><span class="phase-step" id="phaseStep">Schritt 1</span></div>
+      <h3 id="phaseTitle">ATP bindet</h3>
+      <p id="phaseText"></p>
+      <div class="phase-track" id="phaseTrack"></div>
+    </section>
+
+    <!-- Steuerung -->
+    <footer class="controls">
+      <button class="play" id="play" aria-label="Pause">
+        <svg class="i-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="i-play" viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>
+      </button>
+      <div class="timeline">
+        <input id="scrub" type="range" min="0" max="10000" value="0" step="1" aria-label="Zeitleiste" />
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <label class="sel">Tempo
+        <select id="speed">
+          <option value="0.25">0,25×</option>
+          <option value="0.5">0,5×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.5">1,5×</option>
+          <option value="2">2×</option>
+        </select>
+      </label>
+      <button class="chip on" id="follow" aria-pressed="true" title="Kamera folgt dem Kinesin">Folgen</button>
+      <button class="chip on" id="labels" aria-pressed="true" title="Beschriftungen ein/aus">Labels</button>
+      <button class="chip" id="reset" title="Ansicht zurücksetzen">Ansicht</button>
+    </footer>
+
+    <div id="loader">
+      <div class="loader-inner">
+        <img src="/lmg-tech-logo.png" alt="" width="64" height="64" />
+        <div class="loader-title">Lade Modell</div>
+        <div class="loader-bar"><i id="loadBar"></i></div>
+        <div class="loader-pct" id="loadPct">0 %</div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
