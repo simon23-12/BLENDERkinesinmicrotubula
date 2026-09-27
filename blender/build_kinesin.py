@@ -3,15 +3,15 @@ Kinesin-1 walking along a microtubule — procedural Blender build + animation.
 
 Units: 1 Blender unit = 1 nm.  Microtubule axis = +X (plus end at +X), Z = up.
 Run inside Blender (e.g. via the MCP bridge):  exec(open(PATH).read())
-Produces: kinesin.blend, web/public/models/kinesin.glb, web/public/models/timeline.json
+Produces: kinesin.blend, web/models/kinesin.glb, web/models/timeline.json
 """
 import bpy, bmesh, math, random, json, os
 import numpy as np
 from mathutils import Vector, Matrix, Quaternion, Euler, noise
 
 ROOT = "/Users/sim/Documents/fortbildungAI/kinesinwalking"
-GLB_PATH = os.path.join(ROOT, "web/public/models/kinesin.glb")
-TIMELINE_PATH = os.path.join(ROOT, "web/public/models/timeline.json")
+GLB_PATH = os.path.join(ROOT, "web/models/kinesin.glb")
+TIMELINE_PATH = os.path.join(ROOT, "web/models/timeline.json")
 BLEND_PATH = os.path.join(ROOT, "blender/kinesin.blend")
 
 FPS = 30

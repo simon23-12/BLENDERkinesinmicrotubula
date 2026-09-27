@@ -5,11 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Kinesin läuft · LMG TECH</title>
   <meta name="description" content="Interaktive 3D-Animation: Kinesin-1 läuft Hand über Hand entlang eines Mikrotubulus." />
-  <link rel="icon" type="image/png" href="/lmg-tech-logo.png" />
+  <link rel="icon" type="image/png" href="lmg-tech-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="stylesheet" href="src/style.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/",
+        "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.9.15/build/index.module.js"
+      }
+    }
+  </script>
 </head>
 <body>
   <div id="app">
@@ -23,7 +32,7 @@
 
     <!-- Logo + Titel (Ecke oben links) -->
     <header class="brand">
-      <a class="logo" href="#" aria-label="LMG TECH"><img src="/lmg-tech-logo.png" alt="LMG TECH Logo" width="72" height="72" /></a>
+      <a class="logo" href="#" aria-label="LMG TECH"><img src="lmg-tech-logo.png" alt="LMG TECH Logo" width="72" height="72" /></a>
       <div class="titles">
         <div class="eyebrow">Molekulare Motoren · Zellbiologie</div>
         <h1>Kinesin <em>läuft</em></h1>
@@ -107,13 +116,13 @@
 
     <div id="loader">
       <div class="loader-inner">
-        <img src="/lmg-tech-logo.png" alt="" width="64" height="64" />
+        <img src="lmg-tech-logo.png" alt="" width="64" height="64" />
         <div class="loader-title">Lade Modell</div>
         <div class="loader-bar"><i id="loadBar"></i></div>
         <div class="loader-pct" id="loadPct">0 %</div>
       </div>
     </div>
   </div>
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>

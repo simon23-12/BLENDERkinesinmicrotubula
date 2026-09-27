@@ -143,9 +143,9 @@ let root = null;
 
 // ------------------------------------------------------------------ load
 const loader = new GLTFLoader();
-const timelineP = fetch('/models/timeline.json').then((r) => r.json());
+const timelineP = fetch('models/timeline.json').then((r) => r.json());
 loader.load(
-  '/models/kinesin.glb',
+  'models/kinesin.glb',
   async (gltf) => {
     const tl = await timelineP;
     Object.assign(state, { fps: tl.fps, framesPerStep: tl.framesPerStep, steps: tl.steps, phases: tl.phases });
